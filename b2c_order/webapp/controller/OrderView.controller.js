@@ -27,13 +27,13 @@ function (Controller, Filter, FilterOperator) {
             var nameInput = this.byId("nameInput").getValue();
             var dateInput = this.byId("dateInput").getValue();
             var startDate = dateInput.substring(0, 8);
-            var endDate = dateInput.substring(10, 19)
+            var endDate = dateInput.substring(11, 19)
 
             // var startDate2 = this.byId("dateInput").getDateValue();
             // var endDate2 = this.byId("dateInput").getSecondDateValue();
 
-            // console.log(startDate2);
-            // console.log(endDate2);
+            console.log(startDate);
+            console.log(endDate);
 
             var aFilters = [];
 
@@ -49,7 +49,7 @@ function (Controller, Filter, FilterOperator) {
                         // new Filter("pdate", FilterOperator.GE, startDate.toISOString().split("T")[0]),
                         // new Filter("pdate", FilterOperator.GE, endDate.toISOString().split("T")[0])
                         new Filter("pdate", FilterOperator.GE, startDate),
-                        new Filter("pdate", FilterOperator.GE, endDate)
+                        new Filter("pdate", FilterOperator.LE, endDate)
                     ],
                     and : true
                 }));
