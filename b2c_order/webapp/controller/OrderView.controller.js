@@ -32,8 +32,8 @@ function (Controller, Filter, FilterOperator) {
             // var startDate2 = this.byId("dateInput").getDateValue();
             // var endDate2 = this.byId("dateInput").getSecondDateValue();
 
-            console.log(startDate2);
-            console.log(endDate2);
+            // console.log(startDate2);
+            // console.log(endDate2);
 
             var aFilters = [];
 
