@@ -3,7 +3,7 @@
     xmlns:t="sap.ui.table"
     xmlns:u="sap.ui.unified"
 	xmlns:core="sap.ui.core">
-    <Dialog id="itemDialog" title="판매오더 상세" contentWidth="1100px" >
+    <Dialog id="itemDialog" title="판매오더 상세" contentWidth="1200px" >
 		    <t:Table rows="{orderitem>/B2CItemSet}" id="docList2" class="sapUiResponsiveMargin" selectionMode="None" width="auto" visibleRowCountMode="Auto">
             <t:columns >
 
