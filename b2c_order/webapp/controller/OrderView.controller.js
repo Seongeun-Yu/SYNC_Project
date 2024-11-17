@@ -22,9 +22,46 @@ function (Controller, Filter, FilterOperator) {
 
         },
         
-        onSearch : function(){
+        onSearch : function(oEvent) {
+            var sonumInput = this.byId("sonumInput").getValue();
+            var nameInput = this.byId("nameInput").getValue();
+            var dateInput = this.byId("dateInput").getValue();
+            var startDate = dateInput.substring(0, 8);
+            var endDate = dateInput.substring(10, 19)
 
-        },
+            // var startDate2 = this.byId("dateInput").getDateValue();
+            // var endDate2 = this.byId("dateInput").getSecondDateValue();
+
+            console.log(startDate2);
+            console.log(endDate2);
+
+            var aFilters = [];
+
+            if (sonumInput){
+                aFilters.push(new Filter("sonum", FilterOperator.Contains, sonumInput));
+            }
+            if (nameInput){
+                aFilters.push(new Filter("cust_name", FilterOperator.Contains, nameInput));
+            }
+            if (startDate && endDate){
+                aFilters.push( new Filter({
+                    filters : [
+                        // new Filter("pdate", FilterOperator.GE, startDate.toISOString().split("T")[0]),
+                        // new Filter("pdate", FilterOperator.GE, endDate.toISOString().split("T")[0])
+                        new Filter("pdate", FilterOperator.GE, startDate),
+                        new Filter("pdate", FilterOperator.GE, endDate)
+                    ],
+                    and : true
+                }));
+            }
+
+            console.log(aFilters);
+
+            var oTable = this.byId("OrderTable");
+            var oBinding = oTable.getBinding("rows");
+
+            oBinding.filter(aFilters);
+		},
 
         onOpenDialog : function(oEvent){
             var oButton = oEvent.getSource();

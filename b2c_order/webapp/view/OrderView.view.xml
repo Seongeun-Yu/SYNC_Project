@@ -5,26 +5,59 @@
     xmlns:u="sap.ui.unified"
 	xmlns:c="sap.ui.core">
         <Page id="page" title="{i18n>title}">
-            <Panel width="auto" height="100%">
-                <t:Table rows="{/B2CSalesSet}" selectionMode="Single" visibleRowCountMode="Auto">
-                    <t:extension>
-                        <!-- <OverflowToolbar style="Clear">
-                            <Title id="title" text="B2C Sale List"/>
-                        </OverflowToolbar> -->
+            <Panel expandable="true" width="auto" height="auto" class="sapUiResponsiveMargin" expanded="true">
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <Title text="Search"/>
+                    </OverflowToolbar>
+                </headerToolbar>
 
-                        <OverflowToolbar style="Clear">
-                            <ToolbarSpacer/>
-                            <SearchField
-                                placeholder="Filter"
-                                value="{ui>/globalFilter}"
-                                search=".onSearch"
-                                width="15rem"/>
-                        </OverflowToolbar>
-                    </t:extension>
+                <VBox>
+                    <HBox alignItems="Center">
+                        <Label class="sapUiSmallMarginBegin" text="판매주문번호" design="Bold" width="100px" vAlign="Middle"/>
+                        <Input id="sonumInput" width="200px"/>
+                    </HBox>
+                    <HBox alignItems="Center">
+                        <Label class="sapUiSmallMarginBegin" text="회원명" design="Bold" width="100px" vAlign="Middle"/>
+                        <Input id="nameInput" width="200px"/>
+                    </HBox>
+                    <HBox alignItems="Center">
+                        <Label class="sapUiSmallMarginBegin" text="주문일자" design="Bold" width="100px" vAlign="Middle"/>
+                        <HBox justifyContent="SpaceBetween">
+                            <DateRangeSelection id="dateInput" class="DRS1" placeholder=" "
+                            displayFormat="yyyy-MM-dd"
+                            valueFormat="yyyyMMdd"
+                                value= "{
+                                    'type': 'sap.ui.model.type.DateInterval',
+                                    'formatOptions': { 'pattern': 'yyyyMMdd' },
+                                    'parts': [
+                                        {
+                                            'type': 'sap.ui.model.type.Date',
+                                            'path': '/start'
+                                        },
+                                        {
+                                            'type': 'sap.ui.model.type.Date',
+                                            'path': '/end'
+                                        }
+                                    ]
+                                }"
+                            />
+                            <Label width="15px"/>
+                            <Button text="검색" type="Emphasized" press="onSearch"/>
+                        </HBox>
+                    </HBox>
+                </VBox>
+            </Panel>
+            <Panel width="auto" height="100%" class="sapUiResponsiveMargin">
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <Title text="Order List" />
+                    </OverflowToolbar>
+                </headerToolbar>
 
-
+                <t:Table rows="{/B2CSalesSet}" selectionMode="Single" visibleRowCountMode="Auto" id="OrderTable">
                     <t:columns>
-                        <t:Column width="auto" hAlign="Center">
+                        <t:Column width="auto" hAlign="Center" minWidth="130px">
                             <Label text="판매주문번호" design="Bold"/>
 
                             <t:template>
@@ -32,35 +65,40 @@
                             </t:template>
                         </t:Column>
 
-                        <t:Column width="auto" hAlign="Center">
+                        <t:Column width="auto" hAlign="Center" minWidth="100px">
                             <Label text="회원번호" design="Bold"/>
                             <t:template>
                                 <Text text="{cust_num}" wrapping="false" />
                             </t:template>
                         </t:Column>
 
-                        <t:Column width="auto" hAlign="Center">
+                        <t:Column width="auto" hAlign="Center" minWidth="90px">
                             <Label text="회원명" design="Bold"/>
                             <t:template>
                                 <Text text="{cust_name}" wrapping="false" />
                             </t:template>
                         </t:Column>
 
-                        <t:Column width="auto" hAlign="Center">
+                        <t:Column width="auto" hAlign="Center" minWidth="130px">
                             <Label text="아이디" design="Bold"/>
                             <t:template>
                                 <Text text="{user_id}" wrapping="false" />
                             </t:template>
                         </t:Column>
 
-                        <t:Column width="auto" hAlign="Center">
+                        <t:Column width="auto" hAlign="Center" minWidth="100px">
                             <Label text="주문일자" design="Bold"/>
                             <t:template>
                                 <Text text="{pdate}" wrapping="false" />
+                                <!-- <Text text="{
+                                    path : 'pdate',
+                                    type : 'sap.ui.model.type.Date',
+                                    formatOptions: { pattern : 'yyyy-MM-dd' }
+                                }" wrapping="false" /> -->
                             </t:template>
                         </t:Column>
 
-                        <t:Column width="auto" hAlign="Center">
+                        <t:Column width="auto" hAlign="Center" minWidth="130px">
                             <Label text="주문금액" design="Bold"/>
                             <t:template>
                                 <u:Currency value="{=parseFloat(${netwr})}" currency="{waers}" useSymbol="false"/>
