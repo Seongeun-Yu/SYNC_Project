@@ -8,6 +8,7 @@ function (Controller, Filter, FilterOperator) {
 
     return Controller.extend("cl3.syncyoung.sd.b2c.b2corder.controller.OrderView", {
         onInit: function () {
+            // 판매오더 아이템 데이터 불러오기
             var oItemModel = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/ZC302SDCDS0009_CDS/");
       
             oItemModel.read("/B2CItemSet", {
@@ -18,19 +19,24 @@ function (Controller, Filter, FilterOperator) {
                     console.error("오류 발생:", oError);
                 }
             }); 
+
+            // 읽어 온 데이터로 모델 세팅
             this.getView().setModel(oItemModel, "orderitem");
 
         },
         
         onSearch : function(oEvent) {
-            var sonumInput = this.byId("sonumInput").getValue();
-            var nameInput = this.byId("nameInput").getValue();
+            // 검색 조건 읽어오기
+            var sonumInput = this.byId("sonumInput").getValue();        // 판매주문번호
+            var nameInput = this.byId("nameInput").getValue();          // 회원명
 
-            var startDate = this.byId("dateInput").getDateValue();
-            var endDate = this.byId("dateInput").getSecondDateValue();
+            var startDate = this.byId("dateInput").getDateValue();      // 주문일자(from)
+            var endDate = this.byId("dateInput").getSecondDateValue();  // 주문일자(to)
 
+            // 필터
             var aFilters = [];
 
+            // 필터링 조건 세팅
             if (sonumInput){
                 aFilters.push(new Filter("sonum", FilterOperator.Contains, sonumInput));
             }
@@ -47,6 +53,7 @@ function (Controller, Filter, FilterOperator) {
                 }));
             }
 
+            // 데이터 바인딩에 필터 적용
             var oBinding = this.byId("OrderTable").getBinding("rows");
 
             oBinding.filter(aFilters);
@@ -58,7 +65,10 @@ function (Controller, Filter, FilterOperator) {
             var oContext = oButton.getParent().getBindingContext();
             var vSonum = oContext.getProperty('sonum');
 
-            console.log(vSonum);
+            var vSonum2 = this.byId("sonum").getText();
+
+            console.log("vSonum : ", vSonum);
+            console.log("new : ", vSonum2);
 
             if(!this.pDialog){
                 this.pDialog = this.loadFragment({
