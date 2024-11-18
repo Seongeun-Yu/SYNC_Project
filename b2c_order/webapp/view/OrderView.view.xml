@@ -89,12 +89,12 @@
                         <t:Column width="auto" hAlign="Center" minWidth="100px">
                             <Label text="주문일자" design="Bold"/>
                             <t:template>
-                                <Text text="{pdate}" wrapping="false" />
-                                <!-- <Text text="{
+                                <!-- <Text text="{pdate}" wrapping="false" /> -->
+                                <Text text="{
                                     path : 'pdate',
                                     type : 'sap.ui.model.type.Date',
                                     formatOptions: { pattern : 'yyyy-MM-dd' }
-                                }" wrapping="false" /> -->
+                                }" wrapping="false" />
                             </t:template>
                         </t:Column>
 

@@ -25,15 +25,9 @@ function (Controller, Filter, FilterOperator) {
         onSearch : function(oEvent) {
             var sonumInput = this.byId("sonumInput").getValue();
             var nameInput = this.byId("nameInput").getValue();
-            var dateInput = this.byId("dateInput").getValue();
-            var startDate = dateInput.substring(0, 8);
-            var endDate = dateInput.substring(11, 19)
 
-            // var startDate2 = this.byId("dateInput").getDateValue();
-            // var endDate2 = this.byId("dateInput").getSecondDateValue();
-
-            console.log(startDate);
-            console.log(endDate);
+            var startDate = this.byId("dateInput").getDateValue();
+            var endDate = this.byId("dateInput").getSecondDateValue();
 
             var aFilters = [];
 
@@ -46,19 +40,14 @@ function (Controller, Filter, FilterOperator) {
             if (startDate && endDate){
                 aFilters.push( new Filter({
                     filters : [
-                        // new Filter("pdate", FilterOperator.GE, startDate.toISOString().split("T")[0]),
-                        // new Filter("pdate", FilterOperator.GE, endDate.toISOString().split("T")[0])
-                        new Filter("pdate", FilterOperator.GE, startDate),
-                        new Filter("pdate", FilterOperator.LE, endDate)
+                        new Filter("pdate", FilterOperator.GE, startDate.toISOString().split("T")[0]),
+                        new Filter("pdate", FilterOperator.LE, endDate.toISOString().split("T")[0])
                     ],
                     and : true
                 }));
             }
 
-            console.log(aFilters);
-
-            var oTable = this.byId("OrderTable");
-            var oBinding = oTable.getBinding("rows");
+            var oBinding = this.byId("OrderTable").getBinding("rows");
 
             oBinding.filter(aFilters);
 		},
