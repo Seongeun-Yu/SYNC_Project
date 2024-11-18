@@ -6,8 +6,33 @@
     xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
     xmlns:vl="sap.ui.layout">
     <Page id="page" title="{i18n>title}">
-        
+            
         <vl:Grid defaultSpan="XL6 L6 M12 S12" width="100%">
+
+            <!-- 채널별 매출 -->
+            <Panel class="marginPanel">
+                <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='donut'
+                              vizProperties="{ title: {text : '채널별 매출', visible : true}}">
+                    <viz:dataset>
+                        <viz.data:FlattenedDataset data="{/SalesPerChannelSet}">
+                            <viz.data:dimensions>
+                                <viz.data:DimensionDefinition name="유통채널" value="{channel}" />
+                            </viz.data:dimensions>
+                            <viz.data:measures>
+                                <viz.data:MeasureDefinition name="매출" value="{netwr}" />
+                            </viz.data:measures>
+                        </viz.data:FlattenedDataset>
+                    </viz:dataset>
+
+                    <viz:feeds>
+                        <viz.feeds:FeedItem uid="color" type="Dimension" values="유통채널" />
+                        <viz.feeds:FeedItem uid="size" type="Measure" values="매출" />
+                    </viz:feeds>
+                    <viz:dependents>
+                        <viz:Popover id="idPopOver"></viz:Popover>
+                    </viz:dependents>
+                </viz:VizFrame>
+            </Panel>
 
             <!-- BP별 매출 -->
             <Panel class="marginPanel">
@@ -15,7 +40,7 @@
                             vizProperties="{ title: {text : 'BP별 매출', visible : true}}"> <!-- 타이틀 세팅 -->
 
                     <viz:dataset>
-                        <viz.data:FlattenedDataset data="{bp>/SalesPerBPSet}"> <!-- Entity Set Name -->
+                        <viz.data:FlattenedDataset id="BPChart" data="{bp>/SalesPerBPSet}"> <!-- Entity Set Name -->
 
                             <viz.data:dimensions>
                                 <viz.data:DimensionDefinition name="BP" value="{bp>cname}" />
@@ -41,48 +66,18 @@
                 </viz:VizFrame>
             </Panel>
 
-            <!-- 채널별 매출 -->
-            <Panel class="marginPanel">
-                <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='column'
-                            vizProperties="{ title: {text : '채널별 매출', visible : true}}"> <!-- 타이틀 세팅 -->
-
-                    <viz:dataset>
-                        <viz.data:FlattenedDataset data="{/SalesPerChannelSet}"> <!-- Entity Set Name -->
-
-                            <viz.data:dimensions>
-                                <viz.data:DimensionDefinition name="유통채널" value="{channel}" />
-                            </viz.data:dimensions>
-
-                            <viz.data:measures>
-                                <viz.data:MeasureDefinition name="매출" value="{netwr}" />  
-                            </viz.data:measures>
-
-                        </viz.data:FlattenedDataset>
-                    </viz:dataset>
-
-                    <viz:feeds>
-                        <!--values에 DimensionDefinition의 name이 와야 함 -->
-                        <viz.feeds:FeedItem id='categoryAxisFeed' uid="categoryAxis" type="Dimension" values="유통채널" />
-                        <viz.feeds:FeedItem id='valueAxisFeed' uid="valueAxis" type="Measure" values="매출" /> 
-                    </viz:feeds>
-
-                    <viz:dependents>
-                        <viz:Popover id="idPopOver"></viz:Popover>
-                    </viz:dependents>
-
-                </viz:VizFrame>
-            </Panel>
+            
 
         </vl:Grid>
 
         <!-- 자재별 매출 -->
         <vl:Grid defaultSpan="XL12 L12 M12 S12" width="100%">
 
-            <viz:VizFrame id="idVizFrame2" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='column'
+            <viz:VizFrame uiConfig="{applicationSet:'fiori'}" width="100%" vizType='column'
                         vizProperties="{ title: {text : '자재별 매출', visible : true}}"> <!-- 타이틀 세팅 -->
 
                 <viz:dataset>
-                    <viz.data:FlattenedDataset data="{material>/SalesPerMaterialSet}"> <!-- Entity Set Name -->
+                    <viz.data:FlattenedDataset id="MaterialChart" data="{material>/SalesPerMaterialSet}"> <!-- Entity Set Name -->
 
                         <viz.data:dimensions>
                             <viz.data:DimensionDefinition name="자재명" value="{material>maktx}" />
