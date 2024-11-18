@@ -11,7 +11,7 @@
 
             <!-- 채널별 매출 -->
             <Panel class="marginPanel">
-                <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='donut'
+                <viz:VizFrame id="Channel" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='donut'
                               vizProperties="{ title: {text : '채널별 매출', visible : true}}">
                     <viz:dataset>
                         <viz.data:FlattenedDataset data="{/SalesPerChannelSet}">
@@ -29,14 +29,14 @@
                         <viz.feeds:FeedItem uid="size" type="Measure" values="매출" />
                     </viz:feeds>
                     <viz:dependents>
-                        <viz:Popover id="idPopOver"></viz:Popover>
+                        <viz:Popover id="ChannelPopOver"></viz:Popover>
                     </viz:dependents>
                 </viz:VizFrame>
             </Panel>
 
             <!-- BP별 매출 -->
             <Panel class="marginPanel">
-                <viz:VizFrame id="idVizFrame3" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='bar'
+                <viz:VizFrame id="BP" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='bar'
                             vizProperties="{ title: {text : 'BP별 매출', visible : true}}"> <!-- 타이틀 세팅 -->
 
                     <viz:dataset>
@@ -60,7 +60,7 @@
                     </viz:feeds>
 
                     <viz:dependents>
-                        <viz:Popover id="idPopOver3"></viz:Popover>
+                        <viz:Popover id="BPPopOver"></viz:Popover>
                     </viz:dependents>
 
                 </viz:VizFrame>
@@ -73,7 +73,7 @@
         <!-- 자재별 매출 -->
         <vl:Grid defaultSpan="XL12 L12 M12 S12" width="100%">
 
-            <viz:VizFrame uiConfig="{applicationSet:'fiori'}" width="100%" vizType='column'
+            <viz:VizFrame id="Material" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='column'
                         vizProperties="{ title: {text : '자재별 매출', visible : true}}"> <!-- 타이틀 세팅 -->
 
                 <viz:dataset>
@@ -97,7 +97,7 @@
                 </viz:feeds>
 
                 <viz:dependents>
-                    <viz:Popover id="idPopOver2"></viz:Popover>
+                    <viz:Popover id="MaterialPopOver"></viz:Popover>
                 </viz:dependents>
 
             </viz:VizFrame>
