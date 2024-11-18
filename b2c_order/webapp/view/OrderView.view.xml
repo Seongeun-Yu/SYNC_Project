@@ -5,7 +5,7 @@
     xmlns:u="sap.ui.unified"
 	xmlns:c="sap.ui.core">
         <Page id="page" title="{i18n>title}">
-            <Panel expandable="true" width="auto" height="auto" class="sapUiResponsiveMargin" expanded="true">
+            <Panel width="auto" height="auto" class="sapUiResponsiveMargin">
                 <headerToolbar>
                     <OverflowToolbar>
                         <Title text="Search"/>
