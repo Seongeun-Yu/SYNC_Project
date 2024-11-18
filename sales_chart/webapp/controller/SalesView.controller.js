@@ -75,14 +75,17 @@ function (Controller, Sorter, ChartFormatter, DateFormat) {
             var endDate = oDateFormat.format(this.byId("dateInput").getSecondDateValue());
 
             // Make Path
+            var sChannelPath = "/SalesPerChannelSet(p_start_date='" + startDate + "',p_end_date='" + endDate + "')/Set";
             var sMaterialPath = "material>/SalesPerMaterialSet(p_start_date='" + startDate + "',p_end_date='" + endDate + "')/Set";
             var sBPPath = "bp>/SalesPerBPSet(p_start_date='" + startDate + "',p_end_date='" + endDate + "')/Set";
 
             // Get Chart Element
+            var oChannelChart = this.byId("ChannelChart");
             var oMaterialChart = this.byId("MaterialChart");
             var oBPChart = this.byId("BPChart");
 
             // Change data binding
+            oChannelChart.bindAggregation("data", { path: sChannelPath });
             oMaterialChart.bindAggregation("data", { path: sMaterialPath });
             oBPChart.bindAggregation("data", { path: sBPPath });
 

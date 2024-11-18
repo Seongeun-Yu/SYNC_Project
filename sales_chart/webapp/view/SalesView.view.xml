@@ -38,7 +38,7 @@
                 <viz:VizFrame id="Channel" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='donut'
                               vizProperties="{ title: {text : '채널별 매출', visible : true}}">
                     <viz:dataset>
-                        <viz.data:FlattenedDataset data="{SalesPerChannelSet(p_start_date='19000101',p_end_date='99990131')/Set}">
+                        <viz.data:FlattenedDataset id="ChannelChart" data="{/SalesPerChannelSet(p_start_date='19000101',p_end_date='99990131')/Set}">
                             <viz.data:dimensions>
                                 <viz.data:DimensionDefinition name="유통채널" value="{channel}" />
                             </viz.data:dimensions>
