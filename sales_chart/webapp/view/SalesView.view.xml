@@ -6,6 +6,30 @@
     xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
     xmlns:vl="sap.ui.layout">
     <Page id="page" title="{i18n>title}">
+    <HBox alignItems="Center">
+        <HBox justifyContent="SpaceBetween">
+            <DateRangeSelection id="dateInput" class="DRS1" placeholder=" "
+                                displayFormat="yyyy-MM-dd"
+                                valueFormat="yyyy-MM-dd"
+                                    value= "{
+                                        'type': 'sap.ui.model.type.DateInterval',
+                                        'formatOptions': { 'pattern': 'yyyy-MM-dd' },
+                                        'parts': [
+                                            {
+                                                'type': 'sap.ui.model.type.Date',
+                                                'path': '/start'
+                                            },
+                                            {
+                                                'type': 'sap.ui.model.type.Date',
+                                                'path': '/end'
+                                            }
+                                        ]
+                                    }"/>
+            <Label width="15px"/>
+            <Button text="검색" type="Emphasized" press="onPress"/>
+        </HBox>
+    </HBox>
+        
             
         <vl:Grid defaultSpan="XL6 L6 M12 S12" width="100%">
 
@@ -14,7 +38,7 @@
                 <viz:VizFrame id="Channel" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='donut'
                               vizProperties="{ title: {text : '채널별 매출', visible : true}}">
                     <viz:dataset>
-                        <viz.data:FlattenedDataset data="{/SalesPerChannelSet}">
+                        <viz.data:FlattenedDataset data="{SalesPerChannelSet(p_start_date='19000101',p_end_date='99990131')/Set}">
                             <viz.data:dimensions>
                                 <viz.data:DimensionDefinition name="유통채널" value="{channel}" />
                             </viz.data:dimensions>
@@ -40,7 +64,7 @@
                             vizProperties="{ title: {text : 'BP별 매출', visible : true}}"> <!-- 타이틀 세팅 -->
 
                     <viz:dataset>
-                        <viz.data:FlattenedDataset id="BPChart" data="{bp>/SalesPerBPSet}"> <!-- Entity Set Name -->
+                        <viz.data:FlattenedDataset id="BPChart" data="{bp>/SalesPerBPSet(p_start_date='19000101',p_end_date='99991231')/Set}"> <!-- Entity Set Name -->
 
                             <viz.data:dimensions>
                                 <viz.data:DimensionDefinition name="BP" value="{bp>cname}" />
@@ -77,7 +101,7 @@
                         vizProperties="{ title: {text : '자재별 매출', visible : true}}"> <!-- 타이틀 세팅 -->
 
                 <viz:dataset>
-                    <viz.data:FlattenedDataset id="MaterialChart" data="{material>/SalesPerMaterialSet}"> <!-- Entity Set Name -->
+                    <viz.data:FlattenedDataset id="MaterialChart" data="{material>/SalesPerMaterialSet(p_start_date='19000101',p_end_date='99991231')/Set}"> <!-- Entity Set Name -->
 
                         <viz.data:dimensions>
                             <viz.data:DimensionDefinition name="자재명" value="{material>maktx}" />
