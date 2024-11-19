@@ -83,11 +83,22 @@ function (Controller, Sorter, ChartFormatter, DateFormat, Filter, FilterOperator
             var startDate = oDateFormat.format(this.byId("dateInput").getDateValue());
             var endDate = oDateFormat.format(this.byId("dateInput").getSecondDateValue());
 
-            // Make Path
-            var sChannelPath = "/SalesPerChannelSet(p_start_date='" + startDate + "',p_end_date='" + endDate + "')/Set";
-            var sMaterialPath = "material>/SalesPerMaterialSet(p_start_date='" + startDate + "',p_end_date='" + endDate + "')/Set";
-            var sBPPath = "bp>/SalesPerBPSet(p_start_date='" + startDate + "',p_end_date='" + endDate + "')/Set";
+            var sChannelPath, sMaterialPath, sBPPath;
 
+            // Input Validation
+            if (startDate != "" || endDate != ""){
+                // Valid Input
+                sChannelPath = "/SalesPerChannelSet(p_start_date='" + startDate + "',p_end_date='" + endDate + "')/Set";
+                sMaterialPath = "material>/SalesPerMaterialSet(p_start_date='" + startDate + "',p_end_date='" + endDate + "')/Set";
+                sBPPath = "bp>/SalesPerBPSet(p_start_date='" + startDate + "',p_end_date='" + endDate + "')/Set";
+            }
+            else{
+                // Invalid Input
+                sChannelPath = "/SalesPerChannelSet(p_start_date='19000101',p_end_date='99991231')/Set";
+                sMaterialPath = "material>/SalesPerMaterialSet(p_start_date='19000101',p_end_date='99991231')/Set";
+                sBPPath = "bp>/SalesPerBPSet(p_start_date='19000101',p_end_date='99991231')/Set";
+            }
+            
             // Get Chart Element
             var oChannelChart = this.byId("ChannelChart");
             var oMaterialChart = this.byId("MaterialChart");

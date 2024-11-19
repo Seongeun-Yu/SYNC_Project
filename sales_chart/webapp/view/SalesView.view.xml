@@ -8,14 +8,14 @@
     xmlns:u="sap.uxap">
     <u:ObjectPageLayout id="ObjectPageLayout" upperCaseAnchorBar="false">
 
-        <!-- Header -->
         <u:headerTitle>
-            <u:ObjectPageHeader objectTitle="Sales per period">
+            <u:ObjectPageHeader objectTitle="Sales Chart">
             </u:ObjectPageHeader>
         </u:headerTitle>
 
         <u:headerContent>
             <VBox>
+                <ObjectAttribute title="" text="This example explains the rules for the rendering of sections"/>
                 <HBox alignItems="Center">
                     <HBox justifyContent="SpaceBetween">
                         <DateRangeSelection id="dateInput" class="DRS1" placeholder=" "
@@ -40,7 +40,6 @@
                     </HBox>
                 </HBox>
 
-                <ObjectAttribute title="" text="This example explains the rules for the rendering of sections"/>
             </VBox>
         </u:headerContent>
 
