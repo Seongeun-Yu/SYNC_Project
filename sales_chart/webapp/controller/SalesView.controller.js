@@ -3,26 +3,26 @@ sap.ui.define([
     "sap/ui/model/Sorter",
     "sap/viz/ui5/format/ChartFormatter",
     "sap/ui/core/format/DateFormat",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator"
 ],
-function (Controller, Sorter, ChartFormatter, DateFormat) {
+function (Controller, Sorter, ChartFormatter, DateFormat, Filter, FilterOperator) {
     "use strict";
 
     return Controller.extend("cl3.syncyoung.sd.saleschart.saleschart.controller.SalesView", {
         onInit: function () {
-            var oDateRangeModel = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/ZC302SDCDS0010_CDS");
-            oDateRangeModel.read("/DateRangeSet", {
-                success: function(oData) {
-                    console.log("DateRange 데이터 읽기 성공: ", oData.results);     
-                },
-                error: function(oError){
-                    console.log("DateRange 오류 발생: ", oError);
-                }
-            });
-
+            // var oDateRangeModel = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/ZC302SDCDS0010_CDS");
+            // oDateRangeModel.read("/DateRangeSet", {
+            //     success: function(oData) {
+            //         console.log("DateRange 데이터 읽기 성공: ", oData.results);     
+            //     },
+            //     error: function(oError){
+            //         console.log("DateRange 오류 발생: ", oError);
+            //     }
+            // });
             // (1) Get oData for sales per material
             var oMaterialModel = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/ZC302SDCDS0002_CDS/"); // ODataModel 초기화
-
-            oMaterialModel.read("/SalesPerMaterialSet", {
+            oMaterialModel.read("/SalesPerMaterialSet(p_start_date='19000101',p_end_date='99990131')/Set", {
                 success: function(oData) {
                     console.log("Material 데이터 읽기 성공:", oData.results);
                 },
@@ -33,8 +33,7 @@ function (Controller, Sorter, ChartFormatter, DateFormat) {
 
             // (2) Get oData for sales per BP code
             var oBPModel = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/ZC302SDCDS0003_CDS/"); // ODataModel 초기화
-
-            oBPModel.read("/SalesPerBPSet", {
+            oBPModel.read("/SalesPerBPSet(p_start_date='19000101',p_end_date='99990131')/Set", {
                 success: function(oData) {
                     console.log("BP 데이터 읽기 성공:", oData.results);
                     
@@ -46,7 +45,13 @@ function (Controller, Sorter, ChartFormatter, DateFormat) {
 
             // (3) Set oDatas to each models
             this.getView().setModel(oMaterialModel, "material");
-            this.getView().setModel(oBPModel, "bp")
+            this.getView().setModel(oBPModel, "bp");
+            // this.getView().setModel(oDateRangeModel, "dateRange");
+
+            // var minDate = oDateRangeModel.getProperty("/DateRangeSet(mindate='20231101',maxdate='20241201')/mindate");
+            // console.log(minDate);
+            // var minDate = this.byId.getProperty("/DateRangeSet(mindate='20231101',maxdate='20241201')/mindate")
+
 
             // (4) Sorting
             this.byId("BPChart").getBinding("data").sort(new Sorter("netwr", "true"));          // BP별 매출 차트 : 매출 내림차순 정렬
@@ -67,6 +72,7 @@ function (Controller, Sorter, ChartFormatter, DateFormat) {
             var oMaterialPopOver = this.getView().byId("MaterialPopOver");
             oMaterialPopOver.connect(oMaterialChart.getVizUid());
             oMaterialPopOver.setFormatString(ChartFormatter.DefaultPattern.STANDARDCURRENCY.STANDARDFLOAT); 
+            
         },
 
         onPress : function(){
@@ -91,7 +97,6 @@ function (Controller, Sorter, ChartFormatter, DateFormat) {
             oChannelChart.bindAggregation("data", { path: sChannelPath });
             oMaterialChart.bindAggregation("data", { path: sMaterialPath });
             oBPChart.bindAggregation("data", { path: sBPPath });
-
         }
     });
 });
