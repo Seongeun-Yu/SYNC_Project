@@ -9,16 +9,16 @@
     <u:ObjectPageLayout id="ObjectPageLayout" upperCaseAnchorBar="false">
 
         <u:headerTitle>
-            <u:ObjectPageHeader objectTitle="Sales Chart">
-            </u:ObjectPageHeader>
+            <u:ObjectPageHeader objectTitle="Sales Chart" objectSubtitle="채널, 거래처(BP), 자재별 매출 동향 분석"/> <!--Sales Chart, Analyze sales trends by channel, BP, and material-->
         </u:headerTitle>
 
         <u:headerContent>
             <VBox>
-                <ObjectAttribute title="" text="This example explains the rules for the rendering of sections"/>
+                <!-- <ObjectAttribute title="" text="Period"/> -->
+                <ObjectStatus text="조회 기간" state="Success" icon="sap-icon://bar-chart"/>
                 <HBox alignItems="Center">
                     <HBox justifyContent="SpaceBetween">
-                        <DateRangeSelection id="dateInput" class="DRS1" placeholder=" "
+                        <DateRangeSelection id="dateInput" class="DRS1" width="210px" placeholder=" "
                                             displayFormat="yyyy-MM-dd"
                                             valueFormat="yyyy-MM-dd"
                                                 value= "{
@@ -39,7 +39,15 @@
                         <Button text="검색" type="Emphasized" press="onPress"/>
                     </HBox>
                 </HBox>
-
+                <HBox>
+                    <Button text="금일" press="onDatePress('today')" type="Transparent" />
+                    <Label width="15px"/>
+                    <Button text="금주" press="onDatePress('week')" type="Transparent" />
+                    <Label width="15px"/>
+                    <Button text="금월" press="onDatePress('month')" type="Transparent" />
+                    <Label width="15px"/>
+                    <Button text="금년" press="onDatePress('year')" type="Transparent" />
+                </HBox>
             </VBox>
         </u:headerContent>
 
@@ -49,8 +57,11 @@
 				<u:subSections>
 					<u:ObjectPageSubSection titleUppercase="false">
 						<u:blocks>
-							<viz:VizFrame id="Channel" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='donut'
-                                          vizProperties="{ title: {text : '채널별 매출', visible : true}}">
+                            
+                            <viz:VizFrame id="Channel" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='donut'
+                                        vizProperties="{ title: {text : '채널별 매출', visible : true},
+                                                         plotArea : {dataLabel: {visible:true, showPercentage: true}}
+                                                        }">
                                 <viz:dataset>
                                     <viz.data:FlattenedDataset id="ChannelChart" data="{/SalesPerChannelSet(p_start_date='19000101',p_end_date='99990131')/Set}">
                                         <viz.data:dimensions>
@@ -71,6 +82,7 @@
                                     <viz:Popover id="ChannelPopOver"></viz:Popover>
                                 </viz:dependents>
                             </viz:VizFrame>
+                                        
 						</u:blocks>
 					</u:ObjectPageSubSection>
 				</u:subSections>
@@ -82,7 +94,8 @@
 					<u:ObjectPageSubSection titleUppercase="false">
 						<u:blocks>
                             <viz:VizFrame id="BP" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='bar'
-                                          vizProperties="{ title: {text : 'BP별 매출', visible : true}}"> <!-- 타이틀 세팅 -->
+                                          vizProperties="{ title: {text : 'BP별 매출', visible : true}
+                                          }"> <!-- 타이틀 세팅 -->
 
                                 <viz:dataset>
                                     <viz.data:FlattenedDataset id="BPChart" data="{bp>/SalesPerBPSet(p_start_date='19000101',p_end_date='99991231')/Set}"> <!-- Entity Set Name -->

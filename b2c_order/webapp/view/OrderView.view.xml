@@ -54,7 +54,7 @@
                     </OverflowToolbar>
                 </headerToolbar>
 
-                <t:Table rows="{/B2CSalesSet}" selectionMode="Single" visibleRowCountMode="Auto" id="OrderTable">
+                <t:Table rows="{/B2CSalesSet}" selectionMode="Single" rowMode="Auto" id="OrderTable">
                     <t:columns>
                         <t:Column width="auto" hAlign="Center" minWidth="130px">
                             <Label text="판매주문번호" design="Bold"/>
