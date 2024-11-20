@@ -31,58 +31,26 @@ function (Controller, Sorter, ChartFormatter, DateFormat) {
                 }
             });
 
+            var values = oBPModel.oData;
+            Object.keys(values).forEach(key => {
+                console.log('{${obj[key]}')
+            });
+            // temp.forEach(function(item){
+            //     item.netwr = item.netwr / 1000;
+            // });
+            //console.log(values);
+
             // (3) Set oDatas to each models
             this.getView().setModel(oMaterialModel, "material");
             this.getView().setModel(oBPModel, "bp");
+
+
 
             // (4) Sorting
             this.byId("BPChart").getBinding("data").sort(new Sorter("netwr", "true"));          // BP별 매출 차트 : 매출 내림차순 정렬
             this.byId("MaterialChart").getBinding("data").sort(new Sorter("netwr", "true"));    // 자재별 매출 차트 : 매출 내림차순 정렬
 
-            // (5) Filtering
-            // Get VizFrame
-            var oVizFrame = this.getView().byId("BP");
-
-            // // Set Filter
-            // var aFilters = [];
-            // aFilters.push(new Filter("bp>waers", FilterOperator.EQ, "USD"));
-            
-            // var oDataSet = new FlattenedDataset
-            // (
-            //     {
-            //         dimensions:
-            //         [
-            //             {
-            //                 name:"BP",
-            //                 value: "{bp>cname}"
-            //             },
-            //             {
-            //                 name:"통화",
-            //                 value: "{bp>waers}"
-            //             }
-            //         ],
-
-            //         measures:
-            //         [
-            //             {
-            //                 name:"매출",
-            //                 value:"{bp>netwr}"
-            //             }
-            //         ],
-
-            //         data:
-            //         {
-            //             path:"bp>/SalesPerBPSet",
-            //             filters: aFilters
-            //         }
-            //     }
-            // );
-
-            // oVizFrame.removeAllFeeds();
-            // oVizFrame.setDataset(oDataSet);
-
-
-            // (6) PopOver
+            // (5) PopOver
             var oChannelChart = this.getView().byId("Channel");
             var oChannelPopOver = this.getView().byId("ChannelPopOver");
             oChannelPopOver.connect(oChannelChart.getVizUid());

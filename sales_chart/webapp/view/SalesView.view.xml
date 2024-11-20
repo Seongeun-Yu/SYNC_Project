@@ -40,13 +40,13 @@
                     </HBox>
                 </HBox>
                 <HBox>
-                    <Button text="금일" press="onDatePress('today')" type="Transparent" />
-                    <Label width="15px"/>
-                    <Button text="금주" press="onDatePress('week')" type="Transparent" />
-                    <Label width="15px"/>
-                    <Button text="금월" press="onDatePress('month')" type="Transparent" />
-                    <Label width="15px"/>
-                    <Button text="금년" press="onDatePress('year')" type="Transparent" />
+                    <Button text="오늘" press="onDatePress('today')" type="Transparent" />
+                    <Label width="5px"/>
+                    <Button text="이번 주" press="onDatePress('week')" type="Transparent" />
+                    <Label width="5px"/>
+                    <Button text="이번 달" press="onDatePress('month')" type="Transparent" />
+                    <Label width="5px"/>
+                    <Button text="이번 년도" press="onDatePress('year')" type="Transparent" />
                 </HBox>
             </VBox>
         </u:headerContent>
@@ -57,32 +57,70 @@
 				<u:subSections>
 					<u:ObjectPageSubSection titleUppercase="false">
 						<u:blocks>
-                            
-                            <viz:VizFrame id="Channel" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='donut'
-                                        vizProperties="{ title: {text : '채널별 매출', visible : true},
-                                                         plotArea : {dataLabel: {visible:true, showPercentage: true}}
-                                                        }">
-                                <viz:dataset>
-                                    <viz.data:FlattenedDataset id="ChannelChart" data="{/SalesPerChannelSet(p_start_date='19000101',p_end_date='99990131')/Set}">
-                                        <viz.data:dimensions>
-                                            <viz.data:DimensionDefinition name="유통채널" value="{channel}" />
-                                        </viz.data:dimensions>
-                                        <viz.data:measures>
-                                            <viz.data:MeasureDefinition name="매출" value="{netwr}" />
-                                        </viz.data:measures>
-                                    </viz.data:FlattenedDataset>
-                                </viz:dataset>
+                            <vl:Grid defaultSpan="L6 M6 S12" width="100%">
+                                <viz:VizFrame id="Channel" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='donut'
+                                            vizProperties="{ title: {text : '채널별 매출', visible : true},
+                                                            plotArea : {dataLabel: {visible:true, showPercentage: true},
+                                                                        colorPalette: ['#006ba6', '#0496ff', '#ffbc42', '#d81159', '#8f2d56']
+                                                                        },
+                                                            interaction: {selectability: {mode: 'single'}}
+                                                            }"
+                                                            >
+                                    <viz:dataset>
+                                        <viz.data:FlattenedDataset id="ChannelChart" data="{/SalesPerChannelSet(p_start_date='19000101',p_end_date='99990131')/Set}">
+                                            <viz.data:dimensions>
+                                                <viz.data:DimensionDefinition name="유통채널" value="{channel}"/>
+                                            </viz.data:dimensions>
+                                            <viz.data:measures>
+                                                <viz.data:MeasureDefinition name="매출" value="{netwr}" unit="천원" />
+                                            </viz.data:measures>
+                                        </viz.data:FlattenedDataset>
+                                    </viz:dataset>
 
-                                <viz:feeds>
-                                    <viz.feeds:FeedItem uid="color" type="Dimension" values="유통채널" />
-                                    <viz.feeds:FeedItem uid="size" type="Measure" values="매출" />
-                                </viz:feeds>
+                                    <viz:feeds>
+                                        <viz.feeds:FeedItem uid="color" type="Dimension" values="유통채널" />
+                                        <viz.feeds:FeedItem uid="size" type="Measure" values="매출" />
+                                    </viz:feeds>
 
-                                <viz:dependents>
-                                    <viz:Popover id="ChannelPopOver"></viz:Popover>
-                                </viz:dependents>
-                            </viz:VizFrame>
-                                        
+                                    <viz:dependents>
+                                        <viz:Popover id="ChannelPopOver"></viz:Popover>
+                                    </viz:dependents>
+                                </viz:VizFrame>
+
+                                <viz:VizFrame id="BP" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='bar'
+                                            vizProperties="{ title: {text : 'BP별 매출', visible : true},
+                                                            interaction: {selectability: {mode: 'single'}},
+                                                            plotArea: {dataLabel: {visible: true, unitFormatType: 'FinancialUnits'}},
+                                                            valueAxis: {label: {unitFormatType: 'FinancialUnits'}},
+                                                            tooltip: {unitFormatType: 'FinancialUnits'}
+                                                            }">
+
+                                    <viz:dataset>
+                                        <viz.data:FlattenedDataset id="BPChart" data="{bp>/SalesPerBPSet(p_start_date='19000101',p_end_date='99991231')/Set}"> <!-- Entity Set Name -->
+
+                                            <viz.data:dimensions>
+                                                <viz.data:DimensionDefinition name="BP" value="{bp>cname}" />
+                                            </viz.data:dimensions>
+
+                                            <viz.data:measures>
+                                                <viz.data:MeasureDefinition name="매출" value="{bp>netwr}" unit="천원"/>  
+                                            </viz.data:measures>
+
+                                        </viz.data:FlattenedDataset>
+                                    </viz:dataset>
+
+                                    <viz:feeds>
+                                        <!--values에 DimensionDefinition의 name이 와야 함 -->
+                                        <viz.feeds:FeedItem id='categoryAxisFeed3' uid="categoryAxis" type="Dimension" values="BP" />
+                                        <viz.feeds:FeedItem id='valueAxisFeed3' uid="valueAxis" type="Measure" values="매출" /> 
+                                    </viz:feeds>
+
+                                    <viz:dependents>
+                                        <viz:Popover id="BPPopOver"></viz:Popover>
+                                    </viz:dependents>
+
+                                </viz:VizFrame>
+                            </vl:Grid>
 						</u:blocks>
 					</u:ObjectPageSubSection>
 				</u:subSections>
@@ -93,12 +131,13 @@
 				<u:subSections>
 					<u:ObjectPageSubSection titleUppercase="false">
 						<u:blocks>
-                            <viz:VizFrame id="BP" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='bar'
-                                          vizProperties="{ title: {text : 'BP별 매출', visible : true}
-                                          }"> <!-- 타이틀 세팅 -->
+                            <!-- <viz:VizFrame id="BP" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='bar'
+                                          vizProperties="{ title: {text : 'BP별 매출', visible : true},
+                                                         plotArea : {dataLabel: {visible:true, showPercentage: true}}
+                                                        }">
 
                                 <viz:dataset>
-                                    <viz.data:FlattenedDataset id="BPChart" data="{bp>/SalesPerBPSet(p_start_date='19000101',p_end_date='99991231')/Set}"> <!-- Entity Set Name -->
+                                    <viz.data:FlattenedDataset id="BPChart" data="{bp>/SalesPerBPSet(p_start_date='19000101',p_end_date='99991231')/Set}">
 
                                         <viz.data:dimensions>
                                             <viz.data:DimensionDefinition name="BP" value="{bp>cname}" />
@@ -112,7 +151,6 @@
                                 </viz:dataset>
 
                                 <viz:feeds>
-                                    <!--values에 DimensionDefinition의 name이 와야 함 -->
                                     <viz.feeds:FeedItem id='categoryAxisFeed3' uid="categoryAxis" type="Dimension" values="BP" />
                                     <viz.feeds:FeedItem id='valueAxisFeed3' uid="valueAxis" type="Measure" values="매출" /> 
                                 </viz:feeds>
@@ -121,7 +159,7 @@
                                     <viz:Popover id="BPPopOver"></viz:Popover>
                                 </viz:dependents>
 
-                            </viz:VizFrame>
+                            </viz:VizFrame> -->
                         </u:blocks>
 					</u:ObjectPageSubSection>
 				</u:subSections>
@@ -133,8 +171,9 @@
 					<u:ObjectPageSubSection titleUppercase="false">
 						<u:blocks>
                             <viz:VizFrame id="Material" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='column'
-                                          vizProperties="{ title: {text : '자재별 매출', visible : true}}"> <!-- 타이틀 세팅 -->
-
+                                          vizProperties="{ title: {text : '자재별 매출', visible : true},
+                                                           interaction: {selectability: {mode: 'single'}}
+                                                         }">
                                 <viz:dataset>
                                     <viz.data:FlattenedDataset id="MaterialChart" data="{material>/SalesPerMaterialSet(p_start_date='19000101',p_end_date='99991231')/Set}"> <!-- Entity Set Name -->
 
@@ -143,7 +182,7 @@
                                         </viz.data:dimensions>
 
                                         <viz.data:measures>
-                                            <viz.data:MeasureDefinition name="매출" value="{material>netwr}"/>  
+                                            <viz.data:MeasureDefinition name="매출" value="{material>netwr}" unit="천원"/>  
                                         </viz.data:measures>
 
                                     </viz.data:FlattenedDataset>
