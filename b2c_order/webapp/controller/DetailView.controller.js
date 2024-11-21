@@ -33,6 +33,8 @@ function (Controller, Filter, FilterOperator) {
             // 판매주문 번호 읽어오기
             var vSonum = oEvent.getParameter("arguments").id;
 
+            this.byId("sonumInput").setText(vSonum);
+
             // 필터
             var aFilters = [];
 

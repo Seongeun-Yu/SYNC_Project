@@ -2,25 +2,130 @@
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns="sap.m"
     xmlns:t="sap.ui.table"
-    xmlns:u="sap.ui.unified">
-        <Page id="detailPage" title="{i18n>title}">
-            <Panel width="auto" height="auto" class="sapUiResponsiveMargin">
-                <headerToolbar>
+    xmlns:uni="sap.ui.unified"
+    xmlns:u="sap.uxap"
+    xmlns:forms="sap.ui.layout.form"
+    xmlns:vl="sap.ui.layout">
+    <u:ObjectPageLayout id="ObjectPageLayout" upperCaseAnchorBar="false">
+        <!-- <Page id="detailPage" title="{i18n>title}"> -->
+            <!-- <Panel width="auto" height="auto" class="sapUiResponsiveMargin"> -->
+                <u:headerTitle>
+                    <u:ObjectPageHeader objectTitle="Order Detail"/>
+                </u:headerTitle>
+
+                <!-- <headerToolbar>
                     <OverflowToolbar class="PanelHeaderBackground" >
                         <Title text="Order Detail"/>
                     </OverflowToolbar>
-                </headerToolbar>
+                </headerToolbar> -->
 
-            </Panel>
+                <u:sections>
+                    <u:ObjectPageSection titleUppercase="false" title="Order" titleVisible="false" showTitle="false">
+				        <u:subSections>
+					        <u:ObjectPageSubSection title="" mode="Expanded" titleUppercase="false" titleVisible="false" showTitle="false">
+                                <u:blocks>
+                                    <vl:Grid defaultSpan="L6 M6 S12" width="100%">
+                                        <forms:SimpleForm title="Order Detail" editable="false" layout="ColumnLayout">
+                                            <Label design="Bold" width="100px" text="판매주문번호"/>
+                                            <Text id="sonumInput" width="auto"/>
+                                            <Label design="Bold" width="100px" text="주문일자"/>
+                                            <Text text="20204-11-21" width="auto"/>
+                                            <Label design="Bold" width="100px" text="총 주문 금액"/>
+                                            <Text text="54,000원" width="auto"/>
+                                        </forms:SimpleForm>
+                                        <forms:SimpleForm title="Customer Detail" editable="false" layout="ColumnLayout">
+                                            <Label design="Bold" width="100px" text="주문자명"/>
+                                            <Text text="유성은" width="auto"/>
+                                            <Label design="Bold" width="100px" text="연락처"/>
+                                            <Text text="949-690-4713" width="auto"/>
+                                            <Label design="Bold" width="100px" text="주소"/>
+                                            <Text text="경기도 고양시 덕양구" width="auto"/>
+                                        </forms:SimpleForm>
+                                    </vl:Grid>
+                                    
+                                </u:blocks>
+                            </u:ObjectPageSubSection>
 
-            <Panel width="auto" height="auto" class="sapUiResponsiveMargin">
-                <headerToolbar>
+                            <u:ObjectPageSubSection title="" mode="Expanded" titleUppercase="false" titleVisible="false" showTitle="false">
+                                <u:blocks>
+                            <t:Table rows="{orderitem>/B2CItemSet}" id="DetailList" class="sapUiResponsiveMargin" selectionMode="Single" width="auto" rowMode="Auto">
+                                        <t:columns>
+
+                                            <t:Column width="auto" minWidth="130px" hAlign="Center">
+                                                <Label text="판매주문번호"  design="Bold"/>
+                                                <t:template>
+                                                    <Text text="{orderitem>sonum}" wrapping="false" />
+                                                </t:template>
+                                            </t:Column>
+
+                                            <t:Column width="auto" minWidth="100px" hAlign="Center">
+                                                <Label text="아이템번호"  design="Bold"/>
+                                                <t:template>
+                                                    <Text text="{orderitem>posnr}" wrapping="false" />
+                                                </t:template>
+                                            </t:Column>
+
+                                            <t:Column width="auto" minWidth="80px" hAlign="Center">
+                                                <Label text="자재코드"  design="Bold"/>
+                                                <t:template>
+                                                    <Text text="{orderitem>matnr}" wrapping="false" />
+                                                </t:template>
+                                            </t:Column>
+
+                                            <t:Column width="auto" minWidth="350px" hAlign="Center">
+                                                <Label text="자재명"  design="Bold"/>
+                                                <t:template>
+                                                    <Text text="{orderitem>maktx}" wrapping="false" />
+                                                </t:template>
+                                            </t:Column>
+
+                                            <t:Column width="auto" minWidth="130px" hAlign="Center">
+                                                <Label text="단가"  design="Bold"/>
+                                                <t:template>
+                                                    <uni:Currency value="{=parseFloat(${orderitem>price})}" currency="{orderitem>waers}" useSymbol="false"/>
+                                                </t:template>
+                                            </t:Column>
+
+                                            <t:Column width="auto" minWidth="30px" hAlign="Center">
+                                                <Label text="수량"  design="Bold"/>
+                                                <t:template>
+                                                    <Text text="{orderitem>menge}" wrapping="false" />
+                                                </t:template>
+                                            </t:Column>
+
+                                            <t:Column width="auto" minWidth="30px" hAlign="Center">
+                                                <Label text="단위"  design="Bold"/>
+                                                <t:template>
+                                                    <Text text="{orderitem>meins}" wrapping="false" />
+                                                </t:template>
+                                            </t:Column>
+
+                                            <t:Column width="auto" minWidth="130px" hAlign="Center">
+                                                <Label text="총 금액"  design="Bold"/>
+                                                <t:template>
+                                                    <uni:Currency value="{=parseFloat(${orderitem>netwr})}" currency="{orderitem>waers}" useSymbol="false"/>
+                                                </t:template>
+                                            </t:Column>
+
+                                        </t:columns>
+                                    </t:Table>
+                                    </u:blocks>
+                            </u:ObjectPageSubSection>
+                        </u:subSections>
+                    </u:ObjectPageSection>
+                </u:sections>
+
+            
+            <!-- </Panel> -->
+
+            <!-- <Panel width="auto" height="auto" class="sapUiResponsiveMargin"> -->
+                <!-- <headerToolbar>
                     <OverflowToolbar class="PanelHeaderBackground" >
                         <Title text="Order Item"/>
                     </OverflowToolbar>
-                </headerToolbar>
+                </headerToolbar> -->
 
-                <t:Table rows="{orderitem>/B2CItemSet}" id="DetailList" class="sapUiResponsiveMargin" selectionMode="Single" width="auto" rowMode="Auto">
+                <!-- <t:Table rows="{orderitem>/B2CItemSet}" id="DetailList" class="sapUiResponsiveMargin" selectionMode="Single" width="auto" rowMode="Auto">
                     <t:columns>
 
                         <t:Column width="auto" minWidth="130px" hAlign="Center">
@@ -80,7 +185,8 @@
                         </t:Column>
 
                     </t:columns>
-                </t:Table>
-            </Panel>
-        </Page>
+                </t:Table> -->
+            <!-- </Panel> -->
+        <!-- </Page> -->
+    </u:ObjectPageLayout>
 </mvc:View>
