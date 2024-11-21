@@ -59,6 +59,12 @@ function (Controller, Filter, FilterOperator) {
             oBinding.filter(aFilters);
 		},
 
+        onClear : function(){
+            this.byId("sonumInput").setValue("");
+            this.byId("nameInput").setValue("");
+            this.byId("dateInput").setValue("");
+        },
+
         onOpenDialog : function(oEvent){
             var oButton = oEvent.getSource();
 
@@ -95,6 +101,19 @@ function (Controller, Filter, FilterOperator) {
 
         onCloseDialog : function(){
             this.byId("itemDialog").close();
+        },
+
+        onDetail: function(oEvent){
+            var oButton = oEvent.getSource();
+
+            var oContext = oButton.getParent().getBindingContext();
+            var vSonum = oContext.getProperty('sonum');
+
+            console.log(vSonum);
+
+            var oRouter = this.getOwnerComponent().getRouter();
+            oRouter.navTo("Detail", {id: vSonum});
+
         }
     });
 });

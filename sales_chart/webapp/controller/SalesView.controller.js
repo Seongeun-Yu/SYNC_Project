@@ -45,7 +45,6 @@ function (Controller, Sorter, ChartFormatter, DateFormat) {
             this.getView().setModel(oBPModel, "bp");
 
 
-
             // (4) Sorting
             this.byId("BPChart").getBinding("data").sort(new Sorter("netwr", "true"));          // BP별 매출 차트 : 매출 내림차순 정렬
             this.byId("MaterialChart").getBinding("data").sort(new Sorter("netwr", "true"));    // 자재별 매출 차트 : 매출 내림차순 정렬

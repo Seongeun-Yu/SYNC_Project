@@ -7,15 +7,15 @@
         <Page id="page" title="{i18n>title}">
             <Panel width="auto" height="auto" class="sapUiResponsiveMargin">
                 <headerToolbar>
-                    <OverflowToolbar>
+                    <OverflowToolbar class="PanelHeaderBackground" >
                         <Title text="Search"/>
                     </OverflowToolbar>
                 </headerToolbar>
 
-                <VBox>
+                <VBox wrap="Wrap">
                     <HBox alignItems="Center">
                         <Label class="sapUiSmallMarginBegin" text="판매주문번호" design="Bold" width="100px" vAlign="Middle"/>
-                        <Input id="sonumInput" width="200px"/>
+                        <Label class="sapUiSmallMarginBegin" text="{sonum}" design="Bold" width="100px" vAlign="Middle"/>
                     </HBox>
                     <HBox alignItems="Center">
                         <Label class="sapUiSmallMarginBegin" text="회원명" design="Bold" width="100px" vAlign="Middle"/>
@@ -23,7 +23,6 @@
                     </HBox>
                     <HBox alignItems="Center">
                         <Label class="sapUiSmallMarginBegin" text="주문일자" design="Bold" width="100px" vAlign="Middle"/>
-                        <HBox justifyContent="SpaceBetween">
                             <DateRangeSelection id="dateInput" class="DRS1" placeholder=" "
                                                 displayFormat="yyyy-MM-dd"
                                                 valueFormat="yyyyMMdd"
@@ -40,16 +39,19 @@
                                                                 'path': '/end'
                                                             }
                                                         ]
-                                                    }"/>
-                            <Label width="15px"/>
-                            <Button text="검색" type="Emphasized" press="onSearch"/>
-                        </HBox>
-                    </HBox>
+                                                    }"
+                                                    width="200px"/>
+                            <Label text="　"/>
+                            <Button text="검색" icon="sap-icon://search" press="onSearch"/>
+                            <Label text="　"/>
+                            <Button text="초기화" icon="sap-icon://refresh" press="onClear"/>
+                            <Label text="　"/>
+                    </HBox> 
                 </VBox>
             </Panel>
             <Panel width="auto" height="100%" class="sapUiResponsiveMargin">
                 <headerToolbar>
-                    <OverflowToolbar>
+                    <OverflowToolbar class="PanelHeaderBackground" >
                         <Title text="Order List" />
                     </OverflowToolbar>
                 </headerToolbar>
@@ -60,7 +62,8 @@
                             <Label text="판매주문번호" design="Bold"/>
 
                             <t:template>
-                                <Button id="sonum" text="{sonum}" width="auto" press="onOpenDialog" class="sapUiSmallMarginBottm" ariaHasPopup="Dialog"/>
+                                <!-- <Button id="sonum" text="{sonum}" width="auto" press="onOpenDialog" class="sapUiSmallMarginBottm" ariaHasPopup="Dialog"/> -->
+                                <Button id="sonum" text="{sonum}" width="auto" press="onDetail" class="sapUiSmallMarginBottm"/>
                             </t:template>
                         </t:Column>
 

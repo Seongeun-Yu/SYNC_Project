@@ -1,0 +1,86 @@
+<mvc:View controllerName="cl3.syncyoung.sd.b2c.b2corder.controller.DetailView"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m"
+    xmlns:t="sap.ui.table"
+    xmlns:u="sap.ui.unified">
+        <Page id="detailPage" title="{i18n>title}">
+            <Panel width="auto" height="auto" class="sapUiResponsiveMargin">
+                <headerToolbar>
+                    <OverflowToolbar class="PanelHeaderBackground" >
+                        <Title text="Order Detail"/>
+                    </OverflowToolbar>
+                </headerToolbar>
+
+            </Panel>
+
+            <Panel width="auto" height="auto" class="sapUiResponsiveMargin">
+                <headerToolbar>
+                    <OverflowToolbar class="PanelHeaderBackground" >
+                        <Title text="Order Item"/>
+                    </OverflowToolbar>
+                </headerToolbar>
+
+                <t:Table rows="{orderitem>/B2CItemSet}" id="DetailList" class="sapUiResponsiveMargin" selectionMode="Single" width="auto" rowMode="Auto">
+                    <t:columns>
+
+                        <t:Column width="auto" minWidth="130px" hAlign="Center">
+                            <Label text="판매주문번호"  design="Bold"/>
+                            <t:template>
+                                <Text text="{orderitem>sonum}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+
+                        <t:Column width="auto" minWidth="100px" hAlign="Center">
+                            <Label text="아이템번호"  design="Bold"/>
+                            <t:template>
+                                <Text text="{orderitem>posnr}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+
+                        <t:Column width="auto" minWidth="80px" hAlign="Center">
+                            <Label text="자재코드"  design="Bold"/>
+                            <t:template>
+                                <Text text="{orderitem>matnr}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+
+                        <t:Column width="auto" minWidth="350px" hAlign="Center">
+                            <Label text="자재명"  design="Bold"/>
+                            <t:template>
+                                <Text text="{orderitem>maktx}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+
+                        <t:Column width="auto" minWidth="130px" hAlign="Center">
+                            <Label text="단가"  design="Bold"/>
+                            <t:template>
+                                <u:Currency value="{=parseFloat(${orderitem>price})}" currency="{orderitem>waers}" useSymbol="false"/>
+                            </t:template>
+                        </t:Column>
+
+                        <t:Column width="auto" minWidth="30px" hAlign="Center">
+                            <Label text="수량"  design="Bold"/>
+                            <t:template>
+                                <Text text="{orderitem>menge}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+
+                        <t:Column width="auto" minWidth="30px" hAlign="Center">
+                            <Label text="단위"  design="Bold"/>
+                            <t:template>
+                                <Text text="{orderitem>meins}" wrapping="false" />
+                            </t:template>
+                        </t:Column>
+
+                        <t:Column width="auto" minWidth="130px" hAlign="Center">
+                            <Label text="총 금액"  design="Bold"/>
+                            <t:template>
+                                <u:Currency value="{=parseFloat(${orderitem>netwr})}" currency="{orderitem>waers}" useSymbol="false"/>
+                            </t:template>
+                        </t:Column>
+
+                    </t:columns>
+                </t:Table>
+            </Panel>
+        </Page>
+</mvc:View>
