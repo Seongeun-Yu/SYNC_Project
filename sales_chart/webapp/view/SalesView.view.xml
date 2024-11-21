@@ -37,6 +37,8 @@
                                                 }"/>
                         <Label width="15px"/>
                         <Button text="검색" type="Emphasized" press="onPress"/>
+                        <Label width="5px"/>
+                        <Button text="초기화" type="Emphasized" press="onClear"/>
                     </HBox>
                 </HBox>
                 <HBox>
@@ -72,7 +74,7 @@
                                                 <viz.data:DimensionDefinition name="유통채널" value="{channel}"/>
                                             </viz.data:dimensions>
                                             <viz.data:measures>
-                                                <viz.data:MeasureDefinition name="매출" value="{netwr}" unit="천원" />
+                                                <viz.data:MeasureDefinition name="매출" value="{= Math.floor(${netwr} / 1000) }" unit="천원" />
                                             </viz.data:measures>
                                         </viz.data:FlattenedDataset>
                                     </viz:dataset>
@@ -90,9 +92,7 @@
                                 <viz:VizFrame id="BP" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='bar'
                                             vizProperties="{ title: {text : 'BP별 매출', visible : true},
                                                             interaction: {selectability: {mode: 'single'}},
-                                                            plotArea: {dataLabel: {visible: true, unitFormatType: 'FinancialUnits'}},
-                                                            valueAxis: {label: {unitFormatType: 'FinancialUnits'}},
-                                                            tooltip: {unitFormatType: 'FinancialUnits'}
+                                                            valueAxis: {label: {formatString: '#,##0 (천원)'}}
                                                             }">
 
                                     <viz:dataset>
@@ -103,7 +103,7 @@
                                             </viz.data:dimensions>
 
                                             <viz.data:measures>
-                                                <viz.data:MeasureDefinition name="매출" value="{bp>netwr}" unit="천원"/>  
+                                                <viz.data:MeasureDefinition name="매출" value="{= Math.floor(${bp>netwr} / 1000) }" unit="천원"/>  
                                             </viz.data:measures>
 
                                         </viz.data:FlattenedDataset>
@@ -126,45 +126,6 @@
 				</u:subSections>
 			</u:ObjectPageSection>
 
-            <!-- BP별 매출 -->
-            <u:ObjectPageSection titleUppercase="false" title="BP별 매출">
-				<u:subSections>
-					<u:ObjectPageSubSection titleUppercase="false">
-						<u:blocks>
-                            <!-- <viz:VizFrame id="BP" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='bar'
-                                          vizProperties="{ title: {text : 'BP별 매출', visible : true},
-                                                         plotArea : {dataLabel: {visible:true, showPercentage: true}}
-                                                        }">
-
-                                <viz:dataset>
-                                    <viz.data:FlattenedDataset id="BPChart" data="{bp>/SalesPerBPSet(p_start_date='19000101',p_end_date='99991231')/Set}">
-
-                                        <viz.data:dimensions>
-                                            <viz.data:DimensionDefinition name="BP" value="{bp>cname}" />
-                                        </viz.data:dimensions>
-
-                                        <viz.data:measures>
-                                            <viz.data:MeasureDefinition name="매출" value="{bp>netwr}" />  
-                                        </viz.data:measures>
-
-                                    </viz.data:FlattenedDataset>
-                                </viz:dataset>
-
-                                <viz:feeds>
-                                    <viz.feeds:FeedItem id='categoryAxisFeed3' uid="categoryAxis" type="Dimension" values="BP" />
-                                    <viz.feeds:FeedItem id='valueAxisFeed3' uid="valueAxis" type="Measure" values="매출" /> 
-                                </viz:feeds>
-
-                                <viz:dependents>
-                                    <viz:Popover id="BPPopOver"></viz:Popover>
-                                </viz:dependents>
-
-                            </viz:VizFrame> -->
-                        </u:blocks>
-					</u:ObjectPageSubSection>
-				</u:subSections>
-			</u:ObjectPageSection>
-
             <!-- 자재별 매출 -->
             <u:ObjectPageSection titleUppercase="false" title="자재별 매출">
 				<u:subSections>
@@ -182,7 +143,7 @@
                                         </viz.data:dimensions>
 
                                         <viz.data:measures>
-                                            <viz.data:MeasureDefinition name="매출" value="{material>netwr}" unit="천원"/>  
+                                            <viz.data:MeasureDefinition name="매출" value="{= Math.floor(${material>netwr} / 1000) }" unit="천원"/>  
                                         </viz.data:measures>
 
                                     </viz.data:FlattenedDataset>

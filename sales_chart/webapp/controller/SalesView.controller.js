@@ -2,16 +2,19 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/Sorter",
     "sap/viz/ui5/format/ChartFormatter",
-    "sap/ui/core/format/DateFormat"
+    "sap/ui/core/format/DateFormat",
+    "sap/ui/model/json/JSONModel"
 ],
-function (Controller, Sorter, ChartFormatter, DateFormat) {
+function (Controller, Sorter, ChartFormatter, DateFormat, JSONModel) {
     "use strict";
 
     return Controller.extend("cl3.syncyoung.sd.saleschart.saleschart.controller.SalesView", {
         onInit: function () {
+
             var oMaterialModel = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/ZC302SDCDS0002_CDS/"); // ODataModel 초기화
             oMaterialModel.read("/SalesPerMaterialSet(p_start_date='19000101',p_end_date='99990131')/Set", {
                 success: function(oData) {
+
                     console.log("Material 데이터 읽기 성공:", oData.results);
                 },
                 error: function(oError) {
@@ -23,6 +26,7 @@ function (Controller, Sorter, ChartFormatter, DateFormat) {
             var oBPModel = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/ZC302SDCDS0003_CDS/"); // ODataModel 초기화
             oBPModel.read("/SalesPerBPSet(p_start_date='19000101',p_end_date='99990131')/Set", {
                 success: function(oData) {
+
                     console.log("BP 데이터 읽기 성공:", oData.results);
                     
                 },
@@ -30,15 +34,6 @@ function (Controller, Sorter, ChartFormatter, DateFormat) {
                     console.error("BP 오류 발생:", oError);
                 }
             });
-
-            var values = oBPModel.oData;
-            Object.keys(values).forEach(key => {
-                console.log('{${obj[key]}')
-            });
-            // temp.forEach(function(item){
-            //     item.netwr = item.netwr / 1000;
-            // });
-            //console.log(values);
 
             // (3) Set oDatas to each models
             this.getView().setModel(oMaterialModel, "material");
@@ -100,6 +95,10 @@ function (Controller, Sorter, ChartFormatter, DateFormat) {
             oChannelChart.bindAggregation("data", { path: sChannelPath });
             oMaterialChart.bindAggregation("data", { path: sMaterialPath });
             oBPChart.bindAggregation("data", { path: sBPPath });
+        },
+
+        onClear: function(){
+            this.byId("dateInput").setValue("");
         },
 
         onDatePress : function(option){
