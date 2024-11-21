@@ -133,7 +133,8 @@
 						<u:blocks>
                             <viz:VizFrame id="Material" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='column'
                                           vizProperties="{ title: {text : '자재별 매출', visible : true},
-                                                           interaction: {selectability: {mode: 'single'}}
+                                                           interaction: {selectability: {mode: 'single'}},
+                                                           valueAxis: {label: {formatString: '#,##0 (천원)'}}
                                                          }">
                                 <viz:dataset>
                                     <viz.data:FlattenedDataset id="MaterialChart" data="{material>/SalesPerMaterialSet(p_start_date='19000101',p_end_date='99991231')/Set}"> <!-- Entity Set Name -->
