@@ -5,8 +5,9 @@
     xmlns:uni="sap.ui.unified"
     xmlns:u="sap.uxap"
     xmlns:forms="sap.ui.layout.form"
+    xmlns:rowModes="sap.ui.table.rowmodes"
     xmlns:vl="sap.ui.layout">
-    <u:ObjectPageLayout id="ObjectPageLayout" upperCaseAnchorBar="false">
+    <u:ObjectPageLayout id="ObjectPageLayout" upperCaseAnchorBar="false" height="100%">
                 <u:headerTitle>
                     <u:ObjectPageHeader objectTitle="Order Detail"/>
                 </u:headerTitle>
@@ -19,7 +20,7 @@
                                     <vl:Grid defaultSpan="L6 M6 S12" width="100%">
                                         <forms:SimpleForm title="Order Detail" editable="false" layout="ColumnLayout">
                                             <Label design="Bold" width="100px" text="판매주문번호"/>
-                                            <Text id="sonumInput" width="auto"/>
+                                            <Text id="sonumParameter" width="auto"/>
                                             <Label design="Bold" width="100px" text="주문일자"/>
                                             <Text id="pdate" width="auto"/>
                                             <Label design="Bold" width="100px" text="총 주문 금액"/>
@@ -40,17 +41,21 @@
 
                             <u:ObjectPageSubSection mode="Expanded" titleUppercase="false">
                                 <u:blocks>
+                                <VBox height="100%">
                                 <t:Table rows="{orderitem>/B2CItemSet}" id="DetailList" class="sapUiResponsiveMargin" selectionMode="Single" width="auto" rowMode="Auto">
+                                    <t:rowMode>
+                                        <rowModes:Auto minRowCount="16"/>
+                                    </t:rowMode>
                                             <t:columns>
 
-                                                <t:Column width="auto" minWidth="130px" hAlign="Center">
+                                                <t:Column width="auto" minWidth="120px" hAlign="Center">
                                                     <Label text="판매주문번호"  design="Bold"/>
                                                     <t:template>
                                                         <Text text="{orderitem>sonum}" wrapping="false" />
                                                     </t:template>
                                                 </t:Column>
 
-                                                <t:Column width="auto" minWidth="100px" hAlign="Center">
+                                                <t:Column width="auto" minWidth="90px" hAlign="Center">
                                                     <Label text="아이템번호"  design="Bold"/>
                                                     <t:template>
                                                         <Text text="{orderitem>posnr}" wrapping="false" />
@@ -64,7 +69,7 @@
                                                     </t:template>
                                                 </t:Column>
 
-                                                <t:Column width="auto" minWidth="350px" hAlign="Center">
+                                                <t:Column width="auto" minWidth="330px" hAlign="Center">
                                                     <Label text="자재명"  design="Bold"/>
                                                     <t:template>
                                                         <Text text="{orderitem>maktx}" wrapping="false" />
@@ -78,7 +83,7 @@
                                                     </t:template>
                                                 </t:Column>
 
-                                                <t:Column width="auto" minWidth="30px" hAlign="Center">
+                                                <t:Column width="auto" minWidth="50px" hAlign="Center">
                                                     <Label text="수량"  design="Bold"/>
                                                     <t:template>
                                                         <Text text="{orderitem>menge}" wrapping="false" />
@@ -101,6 +106,7 @@
 
                                             </t:columns>
                                         </t:Table>
+                                        </VBox>
                                     </u:blocks>
                             </u:ObjectPageSubSection>
                         </u:subSections>

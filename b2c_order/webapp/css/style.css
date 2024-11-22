@@ -3,3 +3,8 @@
 .PanelHeaderBackground {
     background-color: #D8D8D8 !important;
 }
+
+.removePadding .sapUxAPObjectPageWrapper{
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+}

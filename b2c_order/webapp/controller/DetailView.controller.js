@@ -35,7 +35,7 @@ function (Controller, Filter, FilterOperator, NumberFormat, DateFormat) {
             var vSonum = oEvent.getParameter("arguments").id;
 
             // 판매주문 번호 세팅
-            this.byId("sonumInput").setText(vSonum);
+            this.byId("sonumParameter").setText(vSonum);
 
             // 주문 & 주문자 정보 컴포넌트
             var oPdate = this.byId("pdate");
