@@ -4,8 +4,7 @@
     xmlns:t="sap.ui.table"
     xmlns:u="sap.ui.unified"
     xmlns:ux="sap.uxap"
-	xmlns:c="sap.ui.core"
-    xmlns:rowModes="sap.ui.table.rowmodes">
+	xmlns:c="sap.ui.core">
         <ux:ObjectPageLayout class="removePadding" id="OrderViewObjectPageLayout" upperCaseAnchorBar="false" height="100%">
                 <ux:headerTitle>
                     <ux:ObjectPageHeader objectTitle="B2C Order List"/>
@@ -73,10 +72,10 @@
                                             </OverflowToolbar>
                                         </headerToolbar>
 
-                                        <t:Table rows="{/B2CSalesSet}" selectionMode="Single" id="OrderTable">
-                                            <t:rowMode>
+                                        <t:Table rows="{/B2CSalesSet}" selectionMode="Single" id="OrderTable" visibleRowCount="16">
+                                            <!-- <t:rowMode>
                                                 <rowModes:Auto minRowCount="16" />
-                                            </t:rowMode>
+                                            </t:rowMode> -->
                                             
                                             <t:columns>
                                                 <t:Column width="auto" hAlign="Center" minWidth="130px">
