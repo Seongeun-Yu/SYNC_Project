@@ -104,15 +104,14 @@ function (Controller, Filter, FilterOperator) {
         },
 
         onDetail: function(oEvent){
+            // 버튼에 바인딩되어 있는 판매주문번호 읽어오기
             var oButton = oEvent.getSource();
-
             var oContext = oButton.getParent().getBindingContext();
             var vSonum = oContext.getProperty('sonum');
 
-            console.log(vSonum);
-
+            // 라우터 설정
             var oRouter = this.getOwnerComponent().getRouter();
-            oRouter.navTo("Detail", {id: vSonum});
+            oRouter.navTo("Detail", {id: vSonum}); // 판매주문번호를 파라미터로 같이 보내기 위해서 {id: vSonum} 추가함
 
         }
     });

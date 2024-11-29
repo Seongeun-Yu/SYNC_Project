@@ -9,12 +9,12 @@
     <u:ObjectPageLayout id="ObjectPageLayout" upperCaseAnchorBar="false">
 
         <u:headerTitle>
-            <u:ObjectPageHeader objectTitle="Sales Chart" objectSubtitle="채널, 거래처(BP), 자재별 매출 동향 분석"/> <!--Sales Chart, Analyze sales trends by channel, BP, and material-->
+            <u:ObjectPageHeader objectTitle="Sales Chart" objectSubtitle="채널, 거래처(BP), 자재별 매출 동향 분석"/>
         </u:headerTitle>
 
         <u:headerContent>
             <VBox>
-                <!-- <ObjectAttribute title="" text="Period"/> -->
+                <!-- 검색 조건 -->
                 <ObjectStatus text="조회 기간" state="Success" icon="sap-icon://bar-chart"/>
                 <HBox alignItems="Center">
                     <HBox justifyContent="SpaceBetween">
@@ -42,6 +42,7 @@
                     </HBox>
                 </HBox>
                 <HBox>
+                    <!-- 기간을 클릭하여 간편하게 입력 가능하도록 함 -->
                     <Button text="오늘" press="onDatePress('today')" type="Transparent" />
                     <Label width="5px"/>
                     <Button text="이번 주" press="onDatePress('week')" type="Transparent" />
@@ -54,12 +55,13 @@
         </u:headerContent>
 
         <u:sections>
-            <!-- 채널별 매출 -->
+            <!-- 채널/BP별 매출 -->
 			<u:ObjectPageSection titleUppercase="false" title="채널별 매출">
 				<u:subSections>
 					<u:ObjectPageSubSection titleUppercase="false">
 						<u:blocks>
                             <vl:Grid defaultSpan="L6 M6 S12" width="100%">
+                                <!-- 유통 채널 별 매출 차트 -->
                                 <viz:VizFrame id="Channel" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='donut'
                                             vizProperties="{ title: {text : '채널별 매출', visible : true},
                                                             plotArea : {dataLabel: {visible:true, showPercentage: true},
@@ -89,6 +91,7 @@
                                     </viz:dependents>
                                 </viz:VizFrame>
 
+                                <!-- BP별 매출 차트 -->
                                 <viz:VizFrame id="BP" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='bar'
                                             vizProperties="{ title: {text : 'BP별 매출', visible : true},
                                                             interaction: {selectability: {mode: 'single'}},
@@ -110,7 +113,6 @@
                                     </viz:dataset>
 
                                     <viz:feeds>
-                                        <!--values에 DimensionDefinition의 name이 와야 함 -->
                                         <viz.feeds:FeedItem id='categoryAxisFeed3' uid="categoryAxis" type="Dimension" values="BP" />
                                         <viz.feeds:FeedItem id='valueAxisFeed3' uid="valueAxis" type="Measure" values="매출" /> 
                                     </viz:feeds>
@@ -126,11 +128,12 @@
 				</u:subSections>
 			</u:ObjectPageSection>
 
-            <!-- 자재별 매출 -->
+            <!-- 자재별 매출 차트 -->
             <u:ObjectPageSection titleUppercase="false" title="자재별 매출">
 				<u:subSections>
 					<u:ObjectPageSubSection titleUppercase="false">
 						<u:blocks>
+                            <!-- 자재별 매출 차트 -->
                             <viz:VizFrame id="Material" uiConfig="{applicationSet:'fiori'}" width="100%" vizType='column'
                                           vizProperties="{ title: {text : '자재별 매출', visible : true},
                                                            interaction: {selectability: {mode: 'single'}},
@@ -151,7 +154,6 @@
                                 </viz:dataset>
 
                                 <viz:feeds>
-                                    <!--values에 DimensionDefinition의 name이 와야 함 -->
                                     <viz.feeds:FeedItem id='categoryAxisFeed2' uid="categoryAxis" type="Dimension" values="자재명" />
                                     <viz.feeds:FeedItem id='valueAxisFeed2' uid="valueAxis" type="Measure" values="매출" /> 
                                 </viz:feeds>

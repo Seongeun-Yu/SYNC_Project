@@ -10,11 +10,10 @@ function (Controller, Sorter, ChartFormatter, DateFormat, JSONModel) {
 
     return Controller.extend("cl3.syncyoung.sd.saleschart.saleschart.controller.SalesView", {
         onInit: function () {
-
-            var oMaterialModel = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/ZC302SDCDS0002_CDS/"); // ODataModel 초기화
-            oMaterialModel.read("/SalesPerMaterialSet(p_start_date='19000101',p_end_date='99990131')/Set", {
+            // 자재별 매출 oData 불러오기
+            var oMaterialModel = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/ZC302SDCDS0002_CDS/");
+            oMaterialModel.read("/SalesPerMaterialSet(p_start_date='19000101',p_end_date='99990131')/Set", { // Default : 전체 기간
                 success: function(oData) {
-
                     console.log("Material 데이터 읽기 성공:", oData.results);
                 },
                 error: function(oError) {
@@ -22,29 +21,27 @@ function (Controller, Sorter, ChartFormatter, DateFormat, JSONModel) {
                 }
             }); 
 
-            // (2) Get oData for sales per BP code
-            var oBPModel = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/ZC302SDCDS0003_CDS/"); // ODataModel 초기화
-            oBPModel.read("/SalesPerBPSet(p_start_date='19000101',p_end_date='99990131')/Set", {
+            // BP별 매출 oData 불러오기
+            var oBPModel = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/ZC302SDCDS0003_CDS/"); 
+            oBPModel.read("/SalesPerBPSet(p_start_date='19000101',p_end_date='99990131')/Set", { // Default : 전체 기간
                 success: function(oData) {
-
                     console.log("BP 데이터 읽기 성공:", oData.results);
-                    
                 },
                 error: function(oError) {
                     console.error("BP 오류 발생:", oError);
                 }
             });
 
-            // (3) Set oDatas to each models
+            // 불러 온 oData 모델에 바인딩
             this.getView().setModel(oMaterialModel, "material");
             this.getView().setModel(oBPModel, "bp");
 
 
-            // (4) Sorting
+            // 매출 기준 내림차순으로 정렬
             this.byId("BPChart").getBinding("data").sort(new Sorter("netwr", "true"));          // BP별 매출 차트 : 매출 내림차순 정렬
             this.byId("MaterialChart").getBinding("data").sort(new Sorter("netwr", "true"));    // 자재별 매출 차트 : 매출 내림차순 정렬
 
-            // (5) PopOver
+            // 매출 차트 PopOver 세팅
             var oChannelChart = this.getView().byId("Channel");
             var oChannelPopOver = this.getView().byId("ChannelPopOver");
             oChannelPopOver.connect(oChannelChart.getVizUid());
@@ -63,13 +60,14 @@ function (Controller, Sorter, ChartFormatter, DateFormat, JSONModel) {
         },
 
         onPress : function(){
-            // For Date Formatting
+            // 날짜 formatter
             var oDateFormat = DateFormat.getDateInstance({ pattern: "yyyyMMdd" });
 
-            // Get Date Input
+            // 사용자가 입력한 조회 기간 읽어오기
             var startDate = oDateFormat.format(this.byId("dateInput").getDateValue());
             var endDate = oDateFormat.format(this.byId("dateInput").getSecondDateValue());
 
+            // 경로 세팅
             var sChannelPath, sMaterialPath, sBPPath;
 
             // Input Validation
@@ -96,7 +94,7 @@ function (Controller, Sorter, ChartFormatter, DateFormat, JSONModel) {
             oMaterialChart.bindAggregation("data", { path: sMaterialPath });
             oBPChart.bindAggregation("data", { path: sBPPath });
 
-            // (4) Sorting
+            // Sorting
             this.byId("BPChart").getBinding("data").sort(new Sorter("netwr", "true"));          // BP별 매출 차트 : 매출 내림차순 정렬
             this.byId("MaterialChart").getBinding("data").sort(new Sorter("netwr", "true"));    // 자재별 매출 차트 : 매출 내림차순 정렬
         },
